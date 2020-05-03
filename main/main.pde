@@ -1,9 +1,11 @@
 import java.nio.*;
+import java.util.Map;
+import java.util.HashMap;
+
 import org.opencv.core.*;
 import org.opencv.core.Mat;
 import org.opencv.core.CvType;
 import org.opencv.objdetect.QRCodeDetector;
-
 
 import com.thomasdiewald.ps3eye.PS3EyeP5;
 
@@ -29,7 +31,7 @@ public void setup() {
   scanner = new QRCodeDetector();
 
   if (ps3eye == null) {
-    System.out.println("No PS3Eye connected. Good Bye!");
+    System.err.println("No PS3Eye connected.");
     exit();
     return;
   } 
@@ -45,7 +47,7 @@ public void draw() {
     String content = scanner.detectAndDecode(toMat(ps3eye.getFrame()), points);
     if (content.equals("Wigglytuff")) {
       println("Detection");
-      //shape(wigglytuff);
+      shape(wigglytuff);
       double[] initialPoint = points.get(0, 0);
       float[] prevCoord = new float[points.rows()];
       for (int i = 0; i < points.rows(); i++) {
