@@ -3,6 +3,8 @@ Mat toMat(PImage image) {
   int w = image.width;
   int h = image.height;
 
+  image.loadPixels();
+
   Mat mat = new Mat(h, w, CvType.CV_8UC4);
   byte[] data8 = new byte[w*h*4];
   int[] data32 = new int[w*h];
@@ -23,8 +25,10 @@ PImage toPImage(Mat mat) {
   int h = mat.height();
 
   PImage image = createImage(w, h, ARGB);
+
   byte[] data8 = new byte[w*h*4];
   int[] data32 = new int[w*h];
+
   mat.get(0, 0, data8);
   ByteBuffer.wrap(data8).asIntBuffer().get(data32);
   arrayCopy(data32, image.pixels);
